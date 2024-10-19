@@ -1,0 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.TerrainTools;
+using UnityEngine;
+
+public class ModelTile : MonoBehaviour
+{
+    public TileControler padre;
+    private void OnMouseEnter()
+    {
+        padre.dentroModelo = true;
+    }
+    private void OnMouseExit()
+    {
+        padre.dentroModelo = false;
+    }
+}

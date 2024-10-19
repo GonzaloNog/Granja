@@ -12,6 +12,7 @@ public class TileControler : MonoBehaviour
     private Color colorOriginal;
     private Renderer ren;
     private bool dentro;
+    public bool dentroModelo;
 
     private tileType tileType;
 
@@ -30,27 +31,48 @@ public class TileControler : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(IsPointerOverUI());
         if (LevelManager.instance.editorMode)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && dentro && !IsPointerOverUI())
+            if (Input.GetKeyDown(KeyCode.Mouse0) && dentro && !IsPointerOverUI() && modelo == null)
             {
-                Debug.Log("Entro");
-                ren.material.color = LevelManager.instance.confirm;
-
-                modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
-                Collider objCollider = modelo.GetComponent<Collider>();
-                if (objCollider != null)
+                if (LevelManager.instance.money >= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio)
                 {
-                    // Calculamos la mitad de la altura del objeto
-                    float altura = objCollider.bounds.size.y / 2;
+                    Debug.Log("Entro");
+                    ren.material.color = LevelManager.instance.confirm;
 
-                    // Ajustamos la posición en Y para que no quede hundido
-                    modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
+                    modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
+                    modelo.GetComponent<ModelTile>().padre = this;
+                    Collider objCollider = modelo.GetComponent<Collider>();
+                    if (objCollider != null)
+                    {
+                        // Calculamos la mitad de la altura del objeto
+                        float altura = objCollider.bounds.size.y / 2;
+
+                        // Ajustamos la posición en Y para que no quede hundido
+                        modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
+                    }
+                    else
+                    {
+                        Debug.LogError("El objeto no tiene un Collider para calcular su altura.");
+                    }
+                    LevelManager.instance.money -= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio;
+                    GameUIManager.Instance.UpdateUI();
                 }
                 else
-                {
-                    Debug.LogError("El objeto no tiene un Collider para calcular su altura.");
-                }
+                    StartCoroutine(notMOney());
+            }
+            else if (LevelManager.instance.getDelatemodel() && modelo != null && (dentro || dentroModelo) && Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Destroy(modelo.gameObject);
+                LevelManager.instance.money += Mathf.FloorToInt(((float)LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio * 0.8f));
+                GameUIManager.Instance.UpdateUI();
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse1) && (dentro || dentroModelo) && !IsPointerOverUI() && modelo != null)
+            {
+                Debug.Log("RotarModelo");
+                modelo.transform.Rotate(0, 90, 0);
+                //||
             }
         }
     }
@@ -107,5 +129,13 @@ public class TileControler : MonoBehaviour
     public void setType(tileType tip)
     {
         tileType = tip;
+    }
+
+    public IEnumerator notMOney()
+    {
+        Material instanceMaterial = GetComponent<Renderer>().material;
+        instanceMaterial.color = LevelManager.instance.error;
+        yield return new WaitForSeconds(1);
+        ren.material.color = colorOriginal;
     }
 }

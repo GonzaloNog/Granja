@@ -14,6 +14,7 @@ public class tileUIButton : MonoBehaviour
     public void newIdButton()
     {
         LevelManager.instance.setTileID(idButton);
+        LevelManager.instance.setDelateModel(false);
         Debug.Log(LevelManager.instance.getTileID());
     }
 
