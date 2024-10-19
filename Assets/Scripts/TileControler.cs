@@ -44,17 +44,13 @@ public class TileControler : MonoBehaviour
                     modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
                     modelo.GetComponent<ModelTile>().padre = this;
                     Collider objCollider = modelo.GetComponent<Collider>();
-                    if (objCollider != null)
+                    if (objCollider != null && !modelo.GetComponent<ModelTile>().suelo)
                     {
                         // Calculamos la mitad de la altura del objeto
                         float altura = objCollider.bounds.size.y / 2;
 
                         // Ajustamos la posición en Y para que no quede hundido
                         modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
-                    }
-                    else
-                    {
-                        Debug.LogError("El objeto no tiene un Collider para calcular su altura.");
                     }
                     LevelManager.instance.money -= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio;
                     GameUIManager.Instance.UpdateUI();
