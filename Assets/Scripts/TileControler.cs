@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -36,8 +37,20 @@ public class TileControler : MonoBehaviour
                 Debug.Log("Entro");
                 ren.material.color = LevelManager.instance.confirm;
 
-               // modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID].prefad, this.transform.position, this.transform.rotation);
+                modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
+                Collider objCollider = modelo.GetComponent<Collider>();
+                if (objCollider != null)
+                {
+                    // Calculamos la mitad de la altura del objeto
+                    float altura = objCollider.bounds.size.y / 2;
 
+                    // Ajustamos la posición en Y para que no quede hundido
+                    modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
+                }
+                else
+                {
+                    Debug.LogError("El objeto no tiene un Collider para calcular su altura.");
+                }
             }
         }
     }
