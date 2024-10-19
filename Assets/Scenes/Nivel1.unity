@@ -397,23 +397,23 @@ MonoBehaviour:
   - id: 0
     name: modelo1
     precio: 100
-    prefad: {fileID: 0}
+    prefad: {fileID: 919132149155446097, guid: 428790a47fc289947afabe72d6586cf4, type: 3}
     img: {fileID: 21300000, guid: 37f904d361a5787489e86499a74d7d5b, type: 3}
   - id: 1
     name: modelo2
     precio: 300
-    prefad: {fileID: 0}
+    prefad: {fileID: 919132149155446097, guid: 5864d938e963be0489f7f9733d91b93d, type: 3}
     img: {fileID: 21300000, guid: eeeccbbdc48757a45a3252f44423fec4, type: 3}
   - id: 2
     name: modelo2
     precio: 1000
-    prefad: {fileID: 0}
+    prefad: {fileID: 919132149155446097, guid: 51646fe9b97229a4baa673387353e3d1, type: 3}
     img: {fileID: 21300000, guid: 67b376010428ef243b5f01a023196cc9, type: 3}
   money: 0
   terreno:
-  - {fileID: 2100000, guid: 7e53fe78c422e824194ce2786d6804d4, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ddab3e3210b5253418bc87c1192986a1, type: 2}
+  - {fileID: 2100000, guid: 63ad7797ff9cf8c40bf4824bc871e49c, type: 2}
+  - {fileID: 2100000, guid: 1b9ade3a899814f4c8292d95ec1a4eeb, type: 2}
 --- !u!114 &555686741
 MonoBehaviour:
   m_ObjectHideFlags: 0

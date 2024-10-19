@@ -14,6 +14,8 @@ public class TileControler : MonoBehaviour
 
     private tileType tileType;
 
+    public GameObject modelo;
+
     private void Awake()
     {
         tileType = tileType.normal;
@@ -33,6 +35,9 @@ public class TileControler : MonoBehaviour
             {
                 Debug.Log("Entro");
                 ren.material.color = LevelManager.instance.confirm;
+
+               // modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID].prefad, this.transform.position, this.transform.rotation);
+
             }
         }
     }
@@ -85,5 +90,9 @@ public class TileControler : MonoBehaviour
 
         // Si hay elementos en la lista, significa que el mouse está sobre la UI
         return results.Count > 0;
+    }
+    public void setType(tileType tip)
+    {
+        tileType = tip;
     }
 }
