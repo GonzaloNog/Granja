@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     public Color error;
     public Color confirm;
   
-    public bool editorMode = true;
+    public bool editorMode = false;
 
     public tilesProp[] tiles;
 
@@ -22,6 +22,10 @@ public class LevelManager : MonoBehaviour
     public Material[] terreno;
 
     private int tilePropID;
+    private bool delateModels = false;
+
+    public Camera camConstruccion;
+    public Camera camJuego;
 
     private void Awake()
     {
@@ -29,9 +33,42 @@ public class LevelManager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
-        DontDestroyOnLoad(gameObject);
     }
-
+    void Start()
+    {
+        // Activamos solo la primera cámara al inicio
+        camJuego.gameObject.SetActive(true);
+        camConstruccion.gameObject.SetActive(false);
+        if (editorMode)
+            CambiarEntreCamaras();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CambiarEntreCamaras();
+        }
+    }
+    void CambiarEntreCamaras()
+    {
+        // Cambiamos el estado activo de las cámaras
+        bool camara1Activa = camJuego.gameObject.activeSelf;
+        if (camara1Activa)
+        {
+            editorMode = true;
+            GameUIManager.Instance.UpdateUI();
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+            editorMode = false;
+            GameUIManager.Instance.UpdateUI();
+        }
+        // Si la cámara 1 está activa, la apagamos y encendemos la cámara 2, y viceversa
+        camJuego.gameObject.SetActive(!camara1Activa);
+        camConstruccion.gameObject.SetActive(camara1Activa);
+    }
     //set and get TIles
     public int getTileID()
     {
@@ -40,6 +77,14 @@ public class LevelManager : MonoBehaviour
     public void setTileID(int id)
     {
         tilePropID = id;
+    }
+    public void setDelateModel(bool _delat)
+    {
+        delateModels = _delat;
+    }
+    public bool getDelatemodel()
+    {
+        return delateModels;
     }
 
 }
