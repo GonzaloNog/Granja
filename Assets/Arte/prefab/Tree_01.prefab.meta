@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Blink/Art/Characters/LowPoly/Demo_FREE_LowPolyCharacter/DEMO_FREE_LowPolyHumans.unity.meta
+guid: e87512b69b78be84c91c6df3977d8383
+DefaultImporter:
+========
 guid: 77b07586e3024044693269b633bb107b
 PrefabImporter:
+>>>>>>>> 941219f3754c5cbc4d1136fd787dce7602d2df64:Assets/Arte/prefab/Tree_01.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
