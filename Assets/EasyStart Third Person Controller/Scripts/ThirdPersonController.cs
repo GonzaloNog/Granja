@@ -60,8 +60,6 @@ public class ThirdPersonController : MonoBehaviour
     // Update is only being used here to identify keys and trigger animations
     void Update()
     {
-        if (!LevelManager.instance.editorMode)
-        {
             // Input checkers
             inputHorizontal = Input.GetAxis("Horizontal");
             inputVertical = Input.GetAxis("Vertical");
@@ -106,7 +104,7 @@ public class ThirdPersonController : MonoBehaviour
             }
 
             HeadHittingDetect();
-        }
+        
        
 
     }
@@ -115,8 +113,7 @@ public class ThirdPersonController : MonoBehaviour
     // With the inputs and animations defined, FixedUpdate is responsible for applying movements and actions to the player
     private void FixedUpdate()
     {
-        if (!LevelManager.instance.editorMode)
-        {
+      
             float velocityAdittion = 0;
             if (isSprinting)
                 velocityAdittion = sprintAdittion;
@@ -179,7 +176,7 @@ public class ThirdPersonController : MonoBehaviour
 
             Vector3 moviment = verticalDirection + horizontalDirection;
             cc.Move(moviment);
-        }
+        
         // Sprinting velocity boost or crounching desacelerate
         
 

@@ -31,7 +31,6 @@ public class TileControler : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(IsPointerOverUI());
         if (LevelManager.instance.editorMode)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && dentro && !IsPointerOverUI() && modelo == null)
