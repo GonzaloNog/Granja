@@ -13,14 +13,16 @@ public class TileControler : MonoBehaviour
     private Renderer ren;
     private bool dentro;
     public bool dentroModelo;
+    private int DayPlant;
+    private int DayCosecha;
 
-    private tileType tileType;
+    private tileType tileT;
 
     public GameObject modelo;
 
     private void Awake()
     {
-        tileType = tileType.normal;
+        tileT = tileType.normal;
     }
     public void Start()
     {
@@ -35,27 +37,33 @@ public class TileControler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && dentro && !IsPointerOverUI() && modelo == null)
             {
-                if (LevelManager.instance.money >= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio)
+                if(tileT == tileType.normal)
                 {
-                    Debug.Log("Entro");
-                    ren.material.color = LevelManager.instance.confirm;
-
-                    modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
-                    modelo.GetComponent<ModelTile>().padre = this;
-                    Collider objCollider = modelo.GetComponent<Collider>();
-                    if (objCollider != null && !modelo.GetComponent<ModelTile>().suelo)
+                    if (LevelManager.instance.money >= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio)
                     {
-                        // Calculamos la mitad de la altura del objeto
-                        float altura = objCollider.bounds.size.y / 2;
+                        Debug.Log("Entro");
+                        ren.material.color = LevelManager.instance.confirm;
 
-                        // Ajustamos la posición en Y para que no quede hundido
-                        modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
+                        modelo = Instantiate(LevelManager.instance.tiles[LevelManager.instance.getTileID()].prefad, this.transform.position, this.transform.rotation);
+                        modelo.GetComponent<ModelTile>().padre = this;
+                        Collider objCollider = modelo.GetComponent<Collider>();
+                        if (objCollider != null && !modelo.GetComponent<ModelTile>().suelo)
+                        {
+                            // Calculamos la mitad de la altura del objeto
+                            float altura = objCollider.bounds.size.y / 2;
+
+                            // Ajustamos la posición en Y para que no quede hundido
+                            modelo.transform.position = new UnityEngine.Vector3(this.transform.position.x, this.transform.position.y + altura, this.transform.position.z);
+                        }
+                        LevelManager.instance.money -= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio;
+                        GameUIManager.Instance.UpdateUI();
                     }
-                    LevelManager.instance.money -= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio;
-                    GameUIManager.Instance.UpdateUI();
+                    else
+                        StartCoroutine(notMOney());
                 }
                 else
                     StartCoroutine(notMOney());
+
             }
             else if (LevelManager.instance.getDelatemodel() && modelo != null && (dentro || dentroModelo) && Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -101,6 +109,7 @@ public class TileControler : MonoBehaviour
     {
         if (LevelManager.instance.editorMode)
         {
+            Debug.Log("ColorOriginal");
             ren.material.color = colorOriginal;
             dentro = false;
         }
@@ -123,7 +132,11 @@ public class TileControler : MonoBehaviour
     }
     public void setType(tileType tip)
     {
-        tileType = tip;
+        tileT = tip;
+    }
+    public tileType getTileType()
+    {
+        return tileT;
     }
 
     public IEnumerator notMOney()
@@ -132,5 +145,22 @@ public class TileControler : MonoBehaviour
         instanceMaterial.color = LevelManager.instance.error;
         yield return new WaitForSeconds(1);
         ren.material.color = colorOriginal;
+    }
+
+    public void UpdateTile()
+    {
+        switch (tileT)
+        {
+            case tileType.normal:
+                ren.material = LevelManager.instance.terreno[0];
+                break;
+            case tileType.areado:
+                ren.material = LevelManager.instance.terreno[1];
+                break;
+            case tileType.mojado:
+                ren.material = LevelManager.instance.terreno[2];
+                break;
+        }
+        colorOriginal = GetComponent<Renderer>().material.color;
     }
 }

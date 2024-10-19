@@ -11,6 +11,16 @@ public struct tilesProp
     public GameObject prefad;
     public Sprite img;
 }
+[System.Serializable]
+public struct semilla
+{
+    public string name;
+    public int precio;
+    public int cosecha;
+    public GameObject semillaPrefad;
+    public GameObject plantaPrefadP1;
+    public GameObject plantaPrefadP2;
+}
 public enum tileType
 {
     normal,

@@ -27,6 +27,11 @@ public class LevelManager : MonoBehaviour
     public Camera camConstruccion;
     public Camera camJuego;
 
+    public int Day = 1;
+
+    public semilla[] semillas;
+    private int idSemilla;
+
     private void Awake()
     {
         if (instance == null)
@@ -85,6 +90,14 @@ public class LevelManager : MonoBehaviour
     public bool getDelatemodel()
     {
         return delateModels;
+    }
+    public void setIdSemilla(int num)
+    {
+        idSemilla = num;
+    }
+    public int getIdSemilla()
+    {
+        return idSemilla;
     }
 
 }

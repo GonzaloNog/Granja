@@ -9,7 +9,6 @@ public class ModelTile : MonoBehaviour
     public bool suelo;
     private void OnMouseEnter()
     {
-        Debug.Log("ENTRO");
         padre.dentroModelo = true;
     }
     private void OnMouseExit()
