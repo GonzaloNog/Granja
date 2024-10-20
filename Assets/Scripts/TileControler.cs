@@ -114,6 +114,11 @@ public class TileControler : MonoBehaviour
             dentro = false;
         }
     }
+    public void resetMouseEnter()
+    {
+        ren.material.color = colorOriginal;
+        dentro = false;
+    }
     private bool IsPointerOverUI()
     {
         // Crea un rayo desde la posición del mouse

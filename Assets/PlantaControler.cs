@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class PlantaControler : MonoBehaviour
 {
     private TileControler tile;
-    void Start()
-    {
-        
-    }
     private void Update()
     {
         if (!LevelManager.instance.editorMode)
@@ -27,16 +24,45 @@ public class PlantaControler : MonoBehaviour
                 tile.UpdateTile();
             }
         }
+        cambioSemillas();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
+        UnityEngine.Debug.Log(collision.gameObject.name);
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if(hit.gameObject.tag == "Tile")
         {
             tile = hit.gameObject.GetComponent<TileControler>();
+        }
+    }
+    public void cambioSemillas()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UnityEngine.Debug.Log("1");
+            LevelManager.instance.setIdSemilla(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UnityEngine.Debug.Log("2");
+            LevelManager.instance.setIdSemilla(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UnityEngine.Debug.Log("3");
+            LevelManager.instance.setIdSemilla(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UnityEngine.Debug.Log("4");
+            LevelManager.instance.setIdSemilla(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            UnityEngine.Debug.Log("5");
+            LevelManager.instance.setIdSemilla(5);
         }
     }
 }

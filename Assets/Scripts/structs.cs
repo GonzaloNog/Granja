@@ -17,9 +17,11 @@ public struct semilla
     public string name;
     public int precio;
     public int cosecha;
+    public int ganancia;
     public GameObject semillaPrefad;
     public GameObject plantaPrefadP1;
     public GameObject plantaPrefadP2;
+    public Sprite semillaIMG;
 }
 public enum tileType
 {

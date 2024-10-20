@@ -6,6 +6,14 @@ public class MapaManager : MonoBehaviour
 {
     public static MapaManager instance;
 
+    public TileControler[] modelTile; 
+
+    public GameObject tilePrefab;
+    // Dimensiones de la cuadrícula
+    public int rows = 4;
+    public int columns = 4;
+    private int countTiles = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -14,14 +22,10 @@ public class MapaManager : MonoBehaviour
             Destroy(this.gameObject);
         DontDestroyOnLoad(gameObject);
     }
-
-    public GameObject tilePrefab;
-    // Dimensiones de la cuadrícula
-    public int rows = 4;
-    public int columns = 4;
-    private int countTiles = 0;
     void Start()
     {
+        modelTile = new TileControler[rows * columns];
+        Debug.Log(modelTile.Length);
         GenerateGrid();
     }
 
@@ -29,7 +33,6 @@ public class MapaManager : MonoBehaviour
     {
         // Obtiene el tamaño del tile (su escala local se considera en los ejes X y Z)
         Vector3 tileSize = tilePrefab.GetComponent<Renderer>().bounds.size;
-
         // Recorre las columnas y filas para crear la cuadrícula
         for (int x = 0; x < columns; x++)
         {
@@ -41,8 +44,16 @@ public class MapaManager : MonoBehaviour
                 // Instancia el tile en la posición calculada
                 GameObject tempTile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
                 tempTile.GetComponent<TileControler>().idTile = countTiles;
+                modelTile[countTiles] = tempTile.GetComponent<TileControler>();
                 countTiles++;
             }
+        }
+    }
+    public void ResetEditor()
+    {
+        for(int a = 0; a < modelTile.Length; a++)
+        {
+            modelTile[a].resetMouseEnter();
         }
     }
 }

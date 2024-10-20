@@ -8,8 +8,11 @@ public class GameUIManager : MonoBehaviour
     public static GameUIManager Instance;
     public GameObject contenedor;
     public GameObject tileButton;
+    public GameObject contenedorSemillas;
+    public GameObject tileSemilla;
     public TextMeshProUGUI dinero;
-    public GameObject tienda;
+    public GameObject editor;
+    public GameObject game;
 
     private void Awake()
     {
@@ -32,6 +35,15 @@ public class GameUIManager : MonoBehaviour
             temp.GetComponent<tileUIButton>().idButton = a;
             temp.GetComponent<tileUIButton>().setUI();
         }
+        for(int a = 0; a < LevelManager.instance.semillas.Length;a++)
+        {
+            GameObject temp = Instantiate(tileSemilla);
+
+            temp.transform.SetParent(contenedorSemillas.transform, false);
+            temp.SetActive(true);
+            temp.GetComponent<tileUIButton>().idButton = a;
+            temp.GetComponent<tileUIButton>().setUISemilla();
+        }
     }
     public void DelateMode()
     {
@@ -40,7 +52,8 @@ public class GameUIManager : MonoBehaviour
     public void UpdateUI()
     {
         dinero.text = LevelManager.instance.money.ToString();
-        tienda.SetActive(LevelManager.instance.editorMode);
-        
+        editor.SetActive(LevelManager.instance.editorMode);
+        game.SetActive(!LevelManager.instance.editorMode);
+
     }
 }

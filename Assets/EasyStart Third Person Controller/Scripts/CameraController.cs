@@ -56,8 +56,7 @@ public class CameraController : MonoBehaviour
             transform.position = player.position + new Vector3(0, offsetDistanceY, 0);
 
             // Set camera zoom when mouse wheel is scrolled
-            if (canZoom && Input.GetAxis("Mouse ScrollWheel") != 0)
-                Camera.main.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 2;
+           
             // You can use Mathf.Clamp to set limits on the field of view
 
             // Checker for right click to move camera

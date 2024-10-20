@@ -57,6 +57,7 @@ public class LevelManager : MonoBehaviour
     void CambiarEntreCamaras()
     {
         // Cambiamos el estado activo de las cámaras
+        MapaManager.instance.ResetEditor();
         bool camara1Activa = camJuego.gameObject.activeSelf;
         if (camara1Activa)
         {
