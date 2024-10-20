@@ -49,8 +49,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (!LevelManager.instance.editorMode)
-        {
+        //if (!LevelManager.instance.editorMode)
+       // {
 
             // Follow player - camera offset
             transform.position = player.position + new Vector3(0, offsetDistanceY, 0);
@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
             mouseY = Mathf.Clamp(mouseY, cameraLimit.x, cameraLimit.y);
 
             transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
-        }
+        //}
 
     }
 }

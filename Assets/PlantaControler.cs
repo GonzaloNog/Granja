@@ -8,8 +8,8 @@ public class PlantaControler : MonoBehaviour
     private TileControler tile;
     private void Update()
     {
-        if (!LevelManager.instance.editorMode)
-        {
+        //if (!LevelManager.instance.editorMode)
+        //{
             if (Input.GetKeyDown(KeyCode.E) && tile.modelo == null)
             {
                 switch (tile.getTileType())
@@ -38,7 +38,7 @@ public class PlantaControler : MonoBehaviour
             {
                 LevelManager.instance.newDay();
             }
-        }
+        //}
         cambioSemillas();
     }
     private void OnCollisionEnter(Collision collision)
