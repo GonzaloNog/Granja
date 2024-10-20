@@ -100,5 +100,10 @@ public class LevelManager : MonoBehaviour
     {
         return idSemilla;
     }
+    public void newDay()
+    {
+        Day++;
+        MapaManager.instance.newDay();
+    }
 
 }

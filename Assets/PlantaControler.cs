@@ -22,6 +22,21 @@ public class PlantaControler : MonoBehaviour
                         break;
                 }
                 tile.UpdateTile();
+                tile.cosechar();
+            }
+            if(Input.GetKeyDown(KeyCode.G) && tile.modelo == null)
+            {
+                if(tile.getTileType() == tileType.areado || tile.getTileType() == tileType.mojado)
+                {
+                    if (!tile.plantado)
+                    {
+                       tile.gestionarSemillas();
+                    }
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                LevelManager.instance.newDay();
             }
         }
         cambioSemillas();

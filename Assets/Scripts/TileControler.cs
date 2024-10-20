@@ -13,12 +13,16 @@ public class TileControler : MonoBehaviour
     private Renderer ren;
     private bool dentro;
     public bool dentroModelo;
-    private int DayPlant;
-    private int DayCosecha;
+    private int DayPlantado;
+    public int DayCosecha;
+    private bool regado = false;
+    public bool plantado = false;
 
     private tileType tileT;
 
     public GameObject modelo;
+    private semilla sem;
+    private GameObject planta;
 
     private void Awake()
     {
@@ -163,9 +167,63 @@ public class TileControler : MonoBehaviour
                 ren.material = LevelManager.instance.terreno[1];
                 break;
             case tileType.mojado:
-                ren.material = LevelManager.instance.terreno[2];
+                if (!regado)
+                {
+                    ren.material = LevelManager.instance.terreno[2];
+                    regado = true;
+                }
                 break;
         }
         colorOriginal = GetComponent<Renderer>().material.color;
+    }
+    public void newDay()
+    {
+        regado = false;
+        if(tileT == tileType.mojado)
+        {
+            Debug.Log("DayCosecha: " + DayCosecha + "DayPlantado: " + DayPlantado + "DayActual: " + LevelManager.instance.Day);
+            tileT = tileType.areado;
+            ren.material = LevelManager.instance.terreno[1];
+        }
+        else if (plantado)
+        {
+            DayCosecha++;
+        }
+        if (plantado)
+        {
+            if((DayPlantado + 2) == LevelManager.instance.Day)
+            {
+                Destroy(planta);
+                planta = Instantiate(sem.plantaPrefadP1, this.transform.position, this.transform.rotation);
+            }
+            if (DayCosecha <= LevelManager.instance.Day)
+            {
+                Destroy(planta);
+                planta = Instantiate(sem.plantaPrefadP2, this.transform.position, this.transform.rotation);
+            }
+        }
+    }
+    public void gestionarSemillas()
+    {
+        if (!plantado)
+        {
+            sem = LevelManager.instance.semillas[LevelManager.instance.getIdSemilla()];
+            DayPlantado = LevelManager.instance.Day;
+            DayCosecha = LevelManager.instance.Day + sem.cosecha;
+            planta = Instantiate(sem.semillaPrefad, this.transform.position, this.transform.rotation);
+            plantado = true;
+        }
+    }
+    public void cosechar()
+    {
+        if (DayCosecha <= LevelManager.instance.Day && plantado)
+        {
+            Debug.Log("COSECHA");
+            plantado = false;
+            Destroy(planta);
+            tileT = tileType.areado;
+            LevelManager.instance.money += sem.ganancia;
+            GameUIManager.Instance.UpdateUI();
+        }
     }
 }

@@ -56,4 +56,11 @@ public class MapaManager : MonoBehaviour
             modelTile[a].resetMouseEnter();
         }
     }
+    public void newDay()
+    {
+        for (int a = 0; a < modelTile.Length; a++)
+        {
+            modelTile[a].newDay();
+        }
+    }
 }
