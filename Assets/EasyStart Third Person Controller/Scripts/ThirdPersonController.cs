@@ -42,14 +42,13 @@ public class ThirdPersonController : MonoBehaviour
     bool inputCrouch;
     bool inputSprint;
 
-    Animator animator;
+    public Animator animator;
     CharacterController cc;
 
 
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
 
         // Message informing the user that they forgot to add an animator
         if (animator == null)
