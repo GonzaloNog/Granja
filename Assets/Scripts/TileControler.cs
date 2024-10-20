@@ -23,6 +23,7 @@ public class TileControler : MonoBehaviour
     public GameObject modelo;
     private semilla sem;
     private GameObject planta;
+    private GameObject coin;
 
     private void Awake()
     {
@@ -180,6 +181,7 @@ public class TileControler : MonoBehaviour
                     ren.material = LevelManager.instance.terreno[2];
                     regado = true;
                     AudioManager.instance.newSFX("regar");
+                    Destroy(coin);
                 }
                 break;
         }
@@ -193,10 +195,13 @@ public class TileControler : MonoBehaviour
             Debug.Log("DayCosecha: " + DayCosecha + "DayPlantado: " + DayPlantado + "DayActual: " + LevelManager.instance.Day);
             tileT = tileType.areado;
             ren.material = LevelManager.instance.terreno[1];
+            coin = Instantiate(LevelManager.instance.monedas[0],this.transform.position,this.transform.rotation);
+
         }
         else if (plantado)
         {
             DayCosecha++;
+            coin = Instantiate(LevelManager.instance.monedas[0], this.transform.position, this.transform.rotation);
         }
         if (plantado)
         {
@@ -208,6 +213,8 @@ public class TileControler : MonoBehaviour
             if (DayCosecha <= LevelManager.instance.Day)
             {
                 Destroy(planta);
+                Destroy(coin);
+                coin = Instantiate(LevelManager.instance.monedas[1], this.transform.position, this.transform.rotation);
                 planta = Instantiate(sem.plantaPrefadP2, this.transform.position, this.transform.rotation);
             }
         }

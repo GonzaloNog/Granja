@@ -24,7 +24,7 @@ public class PlantaControler : MonoBehaviour
                 tile.UpdateTile();
                 tile.cosechar();
             }
-            if(Input.GetKeyDown(KeyCode.G) && tile.modelo == null)
+            if(Input.GetKeyDown(KeyCode.F) && tile.modelo == null)
             {
                 if(tile.getTileType() == tileType.areado || tile.getTileType() == tileType.mojado)
                 {

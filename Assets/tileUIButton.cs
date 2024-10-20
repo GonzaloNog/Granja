@@ -10,6 +10,7 @@ public class tileUIButton : MonoBehaviour
 
     public TextMeshProUGUI price;
     public Image spri;
+    public TextMeshProUGUI num;
 
     public void newIdButton()
     {
@@ -22,6 +23,10 @@ public class tileUIButton : MonoBehaviour
     {
         price.text = LevelManager.instance.tiles[idButton].precio.ToString();
         spri.sprite = LevelManager.instance.tiles[idButton].img;
+    }
+    public void setUI2(int _num)
+    {
+        num.text = _num.ToString();
     }
 
     public void setUISemilla()

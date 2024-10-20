@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
 
     public semilla[] semillas;
     private int idSemilla;
+    public GameObject[] monedas;
 
     private void Awake()
     {
