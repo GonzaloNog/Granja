@@ -61,12 +61,19 @@ public class TileControler : MonoBehaviour
                         }
                         LevelManager.instance.money -= LevelManager.instance.tiles[LevelManager.instance.getTileID()].precio;
                         GameUIManager.Instance.UpdateUI();
+                        AudioManager.instance.newSFX("build");
                     }
                     else
+                    {
                         StartCoroutine(notMOney());
+                        AudioManager.instance.newSFX("money");
+                    }
                 }
                 else
+                {
                     StartCoroutine(notMOney());
+                    AudioManager.instance.newSFX("money");
+                }
 
             }
             else if (LevelManager.instance.getDelatemodel() && modelo != null && (dentro || dentroModelo) && Input.GetKeyDown(KeyCode.Mouse0))
@@ -165,12 +172,14 @@ public class TileControler : MonoBehaviour
                 break;
             case tileType.areado:
                 ren.material = LevelManager.instance.terreno[1];
+                AudioManager.instance.newSFX("cabar");
                 break;
             case tileType.mojado:
                 if (!regado)
                 {
                     ren.material = LevelManager.instance.terreno[2];
                     regado = true;
+                    AudioManager.instance.newSFX("regar");
                 }
                 break;
         }
@@ -224,6 +233,9 @@ public class TileControler : MonoBehaviour
             tileT = tileType.areado;
             LevelManager.instance.money += sem.ganancia;
             GameUIManager.Instance.UpdateUI();
+            tileT = tileType.normal;
+            UpdateTile();
+            AudioManager.instance.newSFX("cosechar");
         }
     }
 }

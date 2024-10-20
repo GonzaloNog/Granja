@@ -1,4 +1,6 @@
 ﻿
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.VersionControl;
 using UnityEngine;
 
@@ -30,6 +32,8 @@ public class ThirdPersonController : MonoBehaviour
 
     float jumpElapsedTime = 0;
 
+    public float walkSound;
+    private bool walkSoundB = false;
     // Player states
     bool isJumping = false;
     bool isSprinting = false;
@@ -165,6 +169,8 @@ public class ThirdPersonController : MonoBehaviour
                 float angle = Mathf.Atan2(forward.x + right.x, forward.z + right.z) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
+                if(!walkSoundB)
+                    StartCoroutine(newWalkSound());
             }
 
             // --- End rotation ---
@@ -175,12 +181,21 @@ public class ThirdPersonController : MonoBehaviour
 
             Vector3 moviment = verticalDirection + horizontalDirection;
             cc.Move(moviment);
+        //if (moviment != Vector3.zero && !walkSoundB)
+            
         
         // Sprinting velocity boost or crounching desacelerate
         
 
     }
-
+    public IEnumerator newWalkSound()
+    {
+        Debug.Log("WALK");
+        walkSoundB = true;
+        AudioManager.instance.newSFX("walk");
+        yield return new WaitForSeconds(walkSound);
+        walkSoundB = false;
+    }
 
     //This function makes the character end his jump if he hits his head on something
     void HeadHittingDetect()

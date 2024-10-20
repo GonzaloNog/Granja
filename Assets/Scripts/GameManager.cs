@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; 
+    public static GameManager instance;
 
+    public float volMusica;
+    public float volSFX;
     private void Awake()
     {
         if(instance == null)
@@ -14,4 +16,5 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         DontDestroyOnLoad(gameObject);
     }
+
 }
