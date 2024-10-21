@@ -7,12 +7,14 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public AudioSource musica;
     public AudioSource sfx;
+    public AudioSource vocesControler;
     public AudioClip[] walk;
     public AudioClip construir;
     public AudioClip notMoney;
     public AudioClip[] cabar;
     public AudioClip[] regar;
     public AudioClip[] cosechar;
+    public AudioClip[] voces;
 
     private void Awake()
     {
@@ -51,5 +53,21 @@ public class AudioManager : MonoBehaviour
                 break;
         }
         sfx.Play();
+    }
+    public void vocesPlay(int a)
+    {
+        vocesControler.clip = voces[a];
+        vocesControler.Play();
+        StartCoroutine(audiosVoces(voces[a]));
+    }
+    public IEnumerator audiosVoces(AudioClip clip)
+    {
+        GameUIManager.Instance.chica.SetActive(true);
+        musica.volume = GameManager.instance.volMusica/ 4;
+        sfx.volume = GameManager.instance.volSFX / 4;
+        yield return new WaitForSeconds(clip.length);
+        musica.volume = GameManager.instance.volMusica;
+        sfx.volume = GameManager.instance.volSFX;
+        GameUIManager.Instance.chica.SetActive(false);
     }
 }

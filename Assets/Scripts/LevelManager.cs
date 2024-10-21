@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.UIElements;
 
 public class LevelManager : MonoBehaviour
 {
@@ -32,6 +31,8 @@ public class LevelManager : MonoBehaviour
     public semilla[] semillas;
     private int idSemilla;
     public GameObject[] monedas;
+    public GameObject spawn;
+    public bool[] audios; 
 
     private void Awake()
     {
@@ -64,11 +65,11 @@ public class LevelManager : MonoBehaviour
         {
             editorMode = true;
             GameUIManager.Instance.UpdateUI();
-            Cursor.visible = true;
+            UnityEngine.Cursor.visible = true;
         }
         else
         {
-            Cursor.visible = false;
+            UnityEngine.Cursor.visible = false;
             editorMode = false;
             GameUIManager.Instance.UpdateUI();
         }
@@ -105,6 +106,7 @@ public class LevelManager : MonoBehaviour
     {
         Day++;
         MapaManager.instance.newDay();
+        StartCoroutine(GameUIManager.Instance.newNight());
     }
 
 }

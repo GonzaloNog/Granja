@@ -36,7 +36,7 @@ public class PlantaControler : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.V))
             {
-                LevelManager.instance.newDay();
+                //LevelManager.instance.newDay();
             }
         }
         cambioSemillas();
@@ -52,32 +52,41 @@ public class PlantaControler : MonoBehaviour
             tile = hit.gameObject.GetComponent<TileControler>();
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "cama")
+        {
+            GetComponent<CharacterController>().enabled = false;
+            this.gameObject.transform.position = LevelManager.instance.spawn.transform.position;
+            LevelManager.instance.newDay();
+            GetComponent<CharacterController>().enabled = true;
+        }
+    }
     public void cambioSemillas()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             UnityEngine.Debug.Log("1");
-            LevelManager.instance.setIdSemilla(1);
+            LevelManager.instance.setIdSemilla(0);
+            GameUIManager.Instance.chageSetSemilla();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             UnityEngine.Debug.Log("2");
-            LevelManager.instance.setIdSemilla(2);
+            LevelManager.instance.setIdSemilla(1);
+            GameUIManager.Instance.chageSetSemilla();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             UnityEngine.Debug.Log("3");
-            LevelManager.instance.setIdSemilla(3);
+            LevelManager.instance.setIdSemilla(2);
+            GameUIManager.Instance.chageSetSemilla();
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             UnityEngine.Debug.Log("4");
-            LevelManager.instance.setIdSemilla(4);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            UnityEngine.Debug.Log("5");
-            LevelManager.instance.setIdSemilla(5);
+            LevelManager.instance.setIdSemilla(3);
+            GameUIManager.Instance.chageSetSemilla();
         }
     }
 }

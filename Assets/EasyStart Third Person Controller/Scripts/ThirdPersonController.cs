@@ -1,7 +1,5 @@
 ﻿
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 /*
@@ -190,7 +188,6 @@ public class ThirdPersonController : MonoBehaviour
     }
     public IEnumerator newWalkSound()
     {
-        Debug.Log("WALK");
         walkSoundB = true;
         AudioManager.instance.newSFX("walk");
         yield return new WaitForSeconds(walkSound);

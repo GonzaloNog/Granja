@@ -11,6 +11,7 @@ public class tileUIButton : MonoBehaviour
     public TextMeshProUGUI price;
     public Image spri;
     public TextMeshProUGUI num;
+    public GameObject ON;
 
     public void newIdButton()
     {
@@ -37,5 +38,9 @@ public class tileUIButton : MonoBehaviour
     public void newSemilla()
     {
         LevelManager.instance.setIdSemilla(idButton);
+    }
+    public void setOnSemilla(bool _set)
+    {
+        ON.SetActive(_set);
     }
 }

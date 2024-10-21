@@ -24,6 +24,7 @@ public class TileControler : MonoBehaviour
     private semilla sem;
     private GameObject planta;
     private GameObject coin;
+    private int semillaID;
 
     private void Awake()
     {
@@ -31,9 +32,9 @@ public class TileControler : MonoBehaviour
     }
     public void Start()
     {
-        colorOriginal = GetComponent<Renderer>().material.color;
         ren = GetComponent<Renderer>();
         ren.material = LevelManager.instance.terreno[0];
+        colorOriginal = GetComponent<Renderer>().material.color;
     }
 
     private void Update()
@@ -195,12 +196,18 @@ public class TileControler : MonoBehaviour
             Debug.Log("DayCosecha: " + DayCosecha + "DayPlantado: " + DayPlantado + "DayActual: " + LevelManager.instance.Day);
             tileT = tileType.areado;
             ren.material = LevelManager.instance.terreno[1];
-            coin = Instantiate(LevelManager.instance.monedas[0],this.transform.position,this.transform.rotation);
+            if (plantado)
+            {
+                Destroy(coin);
+                coin = Instantiate(LevelManager.instance.monedas[0], this.transform.position, this.transform.rotation);
+            }
 
         }
         else if (plantado)
         {
             DayCosecha++;
+            DayPlantado++;
+            Destroy(coin);
             coin = Instantiate(LevelManager.instance.monedas[0], this.transform.position, this.transform.rotation);
         }
         if (plantado)
@@ -224,10 +231,16 @@ public class TileControler : MonoBehaviour
         if (!plantado)
         {
             sem = LevelManager.instance.semillas[LevelManager.instance.getIdSemilla()];
-            DayPlantado = LevelManager.instance.Day;
-            DayCosecha = LevelManager.instance.Day + sem.cosecha;
-            planta = Instantiate(sem.semillaPrefad, this.transform.position, this.transform.rotation);
-            plantado = true;
+            if(sem.precio <= LevelManager.instance.money)
+            {
+                semillaID = LevelManager.instance.getIdSemilla();
+                LevelManager.instance.money -= sem.precio;
+                DayPlantado = LevelManager.instance.Day;
+                DayCosecha = LevelManager.instance.Day + sem.cosecha;
+                planta = Instantiate(sem.semillaPrefad, this.transform.position, this.transform.rotation);
+                plantado = true;
+                GameUIManager.Instance.UpdateUI();
+            }
         }
     }
     public void cosechar()
@@ -243,6 +256,11 @@ public class TileControler : MonoBehaviour
             tileT = tileType.normal;
             UpdateTile();
             AudioManager.instance.newSFX("cosechar");
+            if (!LevelManager.instance.audios[semillaID])
+            {
+                LevelManager.instance.audios[semillaID] = true;
+                AudioManager.instance.vocesPlay(semillaID);
+            }
         }
     }
 }

@@ -11,8 +11,12 @@ public class GameUIManager : MonoBehaviour
     public GameObject contenedorSemillas;
     public GameObject tileSemilla;
     public TextMeshProUGUI dinero;
+    public TextMeshProUGUI noche;
+    public GameObject night;
     public GameObject editor;
     public GameObject game;
+    public tileUIButton[] botons; 
+    public GameObject chica;
     private int idStore = 0;
 
     private void Awake()
@@ -23,6 +27,7 @@ public class GameUIManager : MonoBehaviour
     {
         spawnButtons();
         UpdateUI();
+        chageSetSemilla();
     }
 
     public void spawnButtons()
@@ -52,6 +57,7 @@ public class GameUIManager : MonoBehaviour
             temp.GetComponent<tileUIButton>().idButton = a;
             temp.GetComponent<tileUIButton>().setUISemilla();
             temp.GetComponent<tileUIButton>().setUI2(a + 1);
+            botons[a] = temp.GetComponent<tileUIButton>();
         }
     }
     public void DelateMode()
@@ -85,6 +91,23 @@ public class GameUIManager : MonoBehaviour
                 contenedor[a].SetActive(true);
             else
                 contenedor[a].SetActive(false);
+        }
+    }
+    public IEnumerator newNight()
+    {
+        noche.text = "Day " + (LevelManager.instance.Day + 1).ToString();
+        night.SetActive(true);
+        yield return new WaitForSeconds(2);
+        night.SetActive(false);
+    }
+    public void chageSetSemilla()
+    {
+        for(int a = 0; a < botons.Length; a++)
+        {
+            if(LevelManager.instance.getIdSemilla() == a)
+                botons[a].setOnSemilla(true);
+            else
+                botons[a].setOnSemilla(false);
         }
     }
 }

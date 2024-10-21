@@ -22,7 +22,7 @@ public class Coin : MonoBehaviour
         float newY = Mathf.Sin(Time.time * speed) * height;
         transform.position = new Vector3(startPosition.x, startPosition.y + newY, startPosition.z);
 
-        // Rotación sobre el eje Y (giro continuo)
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        // Rotación sobre el eje local Y (ajuste para el objeto "acostado")
+        transform.Rotate(new Vector3(rotationSpeed * Time.deltaTime, 0,0));
     }
 }
