@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameUIManager : MonoBehaviour
     public tileUIButton[] botons; 
     public GameObject chica;
     private int idStore = 0;
+    public GameObject PausePanel;
 
     private void Awake()
     {
@@ -32,7 +34,7 @@ public class GameUIManager : MonoBehaviour
 
     public void spawnButtons()
     {
-        int tempMax = 9;
+        int tempMax = 7;
         int contenedorId = 0;
         for(int a = 0; a < LevelManager.instance.tiles.Length; a++)
         {
@@ -44,7 +46,7 @@ public class GameUIManager : MonoBehaviour
             temp.GetComponent<tileUIButton>().setUI();
             if(a >= tempMax)
             {
-                tempMax = tempMax + 9;
+                tempMax = tempMax + 7;
                 contenedorId++;
             }
         }
@@ -109,5 +111,23 @@ public class GameUIManager : MonoBehaviour
             else
                 botons[a].setOnSemilla(false);
         }
+    }
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void OpenPausePanel()
+    {
+        Cursor.visible = true;
+        PausePanel.SetActive(true);
+    }
+    public void ClosePausePanel()
+    {
+        Cursor.visible = false;
+        PausePanel.SetActive(false);
     }
 }

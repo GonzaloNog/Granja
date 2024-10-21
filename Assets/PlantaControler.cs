@@ -8,6 +8,11 @@ public class PlantaControler : MonoBehaviour
     private TileControler tile;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEngine.Debug.Log("PAUSA");
+            GameUIManager.Instance.OpenPausePanel();
+        }
         if (!LevelManager.instance.editorMode)
         {
             if (Input.GetKeyDown(KeyCode.E) && tile.modelo == null)
@@ -34,10 +39,7 @@ public class PlantaControler : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                //LevelManager.instance.newDay();
-            }
+
         }
         cambioSemillas();
     }
